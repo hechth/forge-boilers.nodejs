@@ -59,6 +59,8 @@ var viewer = null;
 
 function highlightByIds(viewer, idArr)
 {
+  //alert("highlightByIds()");
+
   viewer.clearSelection();
   
   idArr.forEach(function(id) {
@@ -119,10 +121,6 @@ function onDocumentLoaded(doc) {
   viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
   viewer.initialize();
 
-  // viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(ed) {
-  //   console.log(ed);
-  // });
-
   // viewer.addEventListener(Autodesk.Viewing.EXPLODE_CHANGE_EVENT, function(ed) {
   //   highlightByIds(viewer, [2126, 2668]);
   // });
@@ -161,19 +159,29 @@ function onLoadError(errCode) {
 //////////////////////////////////////////////////////////////////////////
 $(document).ready(function() 
 {
-
-  $("#revisions-list li").click(function() 
-  {
- 
+  $('#revisions-list li').click(function() {
     if (this.id === 'revision_5')
-    {
-        var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
-    } 
-    else if (this.id ==='revision_4') 
-    {    
-        
-    }
-  })
+      highlightByIds(viewer, [1301]);
+    else if (this.id === 'revision_4')
+      highlightByIds(viewer, [1309]);
+    else if (this.id === 'revision_3')
+      highlightByIds(viewer, [1311, 1453, 1455, 1459, 1461]);
+    else if (this.id === 'revision_2')
+      highlightByIds(viewer, [1178,1180,1182,1184,1186,1188,1194,1555,1567,1573,1579,1585,1591]);
+    else if (this.id === 'revision_1')
+      highlightByIds(viewer, [2506]);
+  });  
+
+  // $("#revisions-list li").click(function() 
+  // { 
+  //   if (this.id === 'revision_5')
+  //   {
+  //       var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
+  //   } 
+  //   else if (this.id ==='revision_4') 
+  //   {           
+  //   }
+  // })
 
   document.getElementById("btnArch").addEventListener("click", function(){loadDocToViewer(urn_rst1)}, false);
   document.getElementById("btnStruct").addEventListener("click", function(){loadDocToViewer(urn_rst2)}, false);
