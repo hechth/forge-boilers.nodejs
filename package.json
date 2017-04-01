@@ -24,6 +24,6 @@
     "url": "https://github.com/Developer-Autodesk/forge-boilers.nodejs"
   },
   "dependencies": {
-
+    "bootstrap": "^3.3.7"
   }
 }
