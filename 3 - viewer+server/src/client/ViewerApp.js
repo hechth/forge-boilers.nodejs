@@ -20,6 +20,7 @@ import 'app.css'
 import Basic from './extensions/Viewing.Extension.Basic.js'
 import Toolbar from './extensions/Autodesk.ADN.Viewing.Extension.Toolbar/Autodesk.ADN.Viewing.Extension.Toolbar.js'
 import Markup2DExtension from './extensions/Viewing.Extension.Markup2D/Viewing.Extension.Markup2D.js'
+import ModuleLoader from './extensions/Autodesk.ADN.Viewing.Extension.ModelLoader/Autodesk.ADN.Viewing.Extension.ModelLoader'
 
 import MarkupsCore from './extensions/Viewing.Extension.Markup2D/MarkupsCore.js'
 
@@ -88,8 +89,15 @@ function onDocumentLoaded (doc) {
 
   viewer.loadModel(doc.getViewablePath(selectedItem))
 
+    var options = {
+      model: {
+          name: doc.getViewablePath(selectedItem)
+      }
+    };
+
     viewer.loadExtension('Viewing.Extension.Basic')
     viewer.loadExtension('Viewing.Extension.Markup2D')
+    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader',options)
 
 }
 
