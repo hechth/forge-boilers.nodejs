@@ -31,15 +31,15 @@ import 'bootstrap'
 import 'bootstrap-sass'
 //import 'bootstrap/dist/css/bootstrap.css'
 
-var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
+var urn_rst1 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTEyLTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5pZmM';
+var urn_rst2 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTEyLTQxLTA4LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdF9tb2QxLmlmYw'
+var urn_rme1 = 'urn:eyJhbGciOiJIUzI1NiIsImtpZCI6Imp3dF9zeW1tZXRyaWNfa2V5In0.eyJjbGllbnRfaWQiOiJ6bEkwaE9JSUNiMFphTzdNV2xYaFRVSmF0cG1jUlk5RiIsImV4cCI6MTQ5MTE2Mjg3OSwic2NvcGUiOlsiZGF0YTpyZWFkIiwiZGF0YTp3cml0ZSIsImRhdGE6Y3JlYXRlIiwiYnVja2V0OmNyZWF0ZSIsImJ1Y2tldDpyZWFkIl0sImF1ZCI6Imh0dHBzOi8vYXV0b2Rlc2suY29tL2F1ZC9qd3RleHAxNDQwIiwianRpIjoiTHd3Tm95YmUwOVE2UjhVcVVmejBSY2RPa0plWnVaSWhjdE55SWdJVVBuN1hQTDBFTUZOUGdWSG5OMmFhNG1QNCJ9.oX5X2Am4Jneet3aUPS-aKBkSwyPOuMR_IpmW6SjTuME'
 
 /////////////////////////////////////////////////////////////////
 // Initialization Options
 //
 /////////////////////////////////////////////////////////////////
 var initOptions = {
-
-  documentId: urn,
 
   env: 'AutodeskProduction',
 
@@ -52,6 +52,33 @@ var initOptions = {
         tokenResponse.expires_in)
     })
   }
+}
+
+var document_rst_1 = null;
+var document_rst_2 = null;
+var viewer = null;
+
+function highlightByIds(viewer, idArr)
+{
+  viewer.clearSelection();
+  
+  idArr.forEach(function(id) {
+    console.log("DEBUG: Select " + id);
+    viewer.toggleSelect(id);
+  });
+}
+
+function loadDocToViewer(urn)
+{
+  console.log("loadDocToViewer");
+
+  Autodesk.Viewing.Document.load(
+    urn,
+    function(doc) {
+      onDocumentLoaded(doc);
+    },
+    function (errCode){ onLoadError (errCode) }
+  );  
 }
 
 /////////////////////////////////////////////////////////////////
@@ -82,23 +109,36 @@ function onDocumentLoaded (doc) {
   // UI-less Version: viewer without controls and commands
   //viewer = new Autodesk.Viewing.Viewer3D(domContainer)
 
+  var child = domContainer.firstChild;
+  while (!!child)
+  {
+    domContainer.removeChild(child);
+    child = domContainer.firstChild;
+  }
+
   // GUI Version: viewer with controls
-  var viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer)
+  viewer = new Autodesk.Viewing.Private.GuiViewer3D(domContainer);
+  viewer.initialize();
 
-  viewer.initialize()
+  // viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(ed) {
+  //   console.log(ed);
+  // });
 
-  viewer.loadModel(doc.getViewablePath(selectedItem))
+  // viewer.addEventListener(Autodesk.Viewing.EXPLODE_CHANGE_EVENT, function(ed) {
+  //   highlightByIds(viewer, [2126, 2668]);
+  // });
 
-    var options = {
-      model: {
-          name: doc.getViewablePath(selectedItem)
-      }
-    };
+  viewer.loadModel(doc.getViewablePath(selectedItem));
 
-    viewer.loadExtension('Viewing.Extension.Basic')
-    viewer.loadExtension('Viewing.Extension.Markup2D')
-    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader',options)
+  var options = {
+    model: {
+        name: doc.getViewablePath(selectedItem)
+    }
+  };
 
+  viewer.loadExtension('Viewing.Extension.Basic');
+  viewer.loadExtension('Viewing.Extension.Markup2D');
+  viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader',options);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -106,15 +146,7 @@ function onDocumentLoaded (doc) {
 //
 /////////////////////////////////////////////////////////////////
 function onEnvInitialized () {
-
-  Autodesk.Viewing.Document.load(
-    initOptions.documentId,
-    function(doc) {
-      onDocumentLoaded (doc)
-    },
-    function (errCode){
-      onLoadError (errCode)
-    })
+  loadDocToViewer(urn_rst1);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -131,6 +163,10 @@ function onLoadError (errCode) {
 //
 //////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
+
+  document.getElementById("btnArch").addEventListener("click", function(){loadDocToViewer(urn_rst1)}, false);
+  document.getElementById("btnStruct").addEventListener("click", function(){loadDocToViewer(urn_rst2)}, false);
+  document.getElementById("btnMep").addEventListener("click", function(){loadDocToViewer(urn_rme1)}, false);
 
   Autodesk.Viewing.Initializer(
     initOptions,

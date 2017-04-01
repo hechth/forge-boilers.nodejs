@@ -12,6 +12,33 @@ body {
   color: #5f6468;
 }
 
+
+.myButton {
+      background-color: white;
+      color: navy;
+      border: 2px solid navy;
+      border-radius: 5px;
+      display:inline-block;
+      cursor:pointer;
+      font-family:Verdana;
+      font-size:17px;
+      padding:16px 50px;
+      text-decoration:none;
+      margin-top: 1em;
+      -webkit-transition-duration: 0.4s; 
+      transition-duration: 0.4s;
+}
+
+.myButton:hover {
+      background-color: navy; 
+      color: white;
+}
+
+.myButton:active {
+      position:relative;
+      top:1px;
+}
+
 p {
   color: #777;
 }
