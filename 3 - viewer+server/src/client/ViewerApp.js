@@ -159,16 +159,22 @@ function onLoadError(errCode) {
 // Application Bootstrapping
 //
 //////////////////////////////////////////////////////////////////////////
-$(document).ready(function() {
+$(document).ready(function() 
+{
 
-  $("#revisions-list li").click(function() {
+  $("#revisions-list li").click(function() 
+  {
  
- if (this.id === 'revision_5')
- {
-    var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
- } else if (this.id ==='revision_4') {
+    if (this.id === 'revision_5')
+    {
+        var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
+    } 
+    else if (this.id ==='revision_4') 
+    {    
+        
+    }
+  })
 
-    
   document.getElementById("btnArch").addEventListener("click", function(){loadDocToViewer(urn_rst1)}, false);
   document.getElementById("btnStruct").addEventListener("click", function(){loadDocToViewer(urn_rst2)}, false);
   document.getElementById("btnMep").addEventListener("click", function(){loadDocToViewer(urn_rme1)}, false);
@@ -179,9 +185,4 @@ $(document).ready(function() {
       onEnvInitialized()
     })
 
- }
-
-})
-
-  
 })
