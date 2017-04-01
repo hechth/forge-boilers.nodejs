@@ -17,6 +17,19 @@
 //////////////////////////////////////////////////////////////////////////
 import 'app.css'
 
+import Basic from './extensions/Viewing.Extension.Basic.js'
+import Toolbar from './extensions/Autodesk.ADN.Viewing.Extension.Toolbar/Autodesk.ADN.Viewing.Extension.Toolbar.js'
+import Markup2DExtension from './extensions/Viewing.Extension.Markup2D/Viewing.Extension.Markup2D.js'
+
+import MarkupsCore from './extensions/Viewing.Extension.Markup2D/MarkupsCore.js'
+
+
+
+import 'bootstrap'
+//import 'bootstrap-compass'
+import 'bootstrap-sass'
+//import 'bootstrap/dist/css/bootstrap.css'
+
 var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
 
 /////////////////////////////////////////////////////////////////
@@ -74,6 +87,10 @@ function onDocumentLoaded (doc) {
   viewer.initialize()
 
   viewer.loadModel(doc.getViewablePath(selectedItem))
+
+    viewer.loadExtension('Viewing.Extension.Basic')
+    viewer.loadExtension('Viewing.Extension.Markup2D')
+
 }
 
 /////////////////////////////////////////////////////////////////
