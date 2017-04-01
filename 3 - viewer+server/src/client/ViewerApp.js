@@ -35,11 +35,8 @@ import 'jquery-ui';
 var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
 
 
-$(document).ready(() => {
 
-  $("#revisions-list li").click(function() {
-    console.log(this.id);
-})
+
 
 
 
@@ -147,10 +144,23 @@ function onLoadError(errCode) {
 //////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
 
-  Autodesk.Viewing.Initializer(
+  $("#revisions-list li").click(function() {
+ 
+ if (this.id === 'revision_5')
+ {
+    var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
+ } else if (this.id ==='revision_4') {
+
+    
+   Autodesk.Viewing.Initializer(
     initOptions,
     function() {
       onEnvInitialized()
     })
+
+ }
+
 })
-});
+
+  
+})

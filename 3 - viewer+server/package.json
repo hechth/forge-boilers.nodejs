@@ -36,6 +36,7 @@
     "jquery-ui": "^1.12.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "lodash": "^4.17.4",
     "moment": "^2.14.1",
     "raw-loader": "^0.5.1",
     "request": "^2.72.0",
