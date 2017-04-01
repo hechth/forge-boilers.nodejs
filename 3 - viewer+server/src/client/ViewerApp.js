@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////
 import 'app.css'
 
-var urn = 'urn:<your doc URN>'
+var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
 
 /////////////////////////////////////////////////////////////////
 // Initialization Options
