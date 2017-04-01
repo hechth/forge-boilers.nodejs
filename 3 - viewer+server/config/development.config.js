@@ -12,8 +12,8 @@ module.exports = {
         
         forge: {
             oauth: {
-              clientSecret: TlA9v917YRFmHQ2z ,
-              clientId: zlI0hOIICb0ZaO7MWlXhTUJatpmcRY9F
+              clientSecret: "TlA9v917YRFmHQ2z",
+              clientId: "zlI0hOIICb0ZaO7MWlXhTUJatpmcRY9F"
             }
         }
     }

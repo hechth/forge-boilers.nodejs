@@ -1,0 +1,47 @@
+
+
+== DASHBOARD ==
+
+* Embed a dashboard component into app
+* Implement view selection
+* Implement domain (mep, strckt, arch) selection
+
+== VIEWER EXTENSIONS ==
+
+- Marker extension
+ * Search and embed
+ 
+- Figure out if some other extensions needed
+
+
+== MODEL DATA EXTRACTION ==
+
+- Core model management
+  * Extract objects from the model
+  * Extract properties from the objects
+- Change comparison
+  * Generate hashes from the objects
+  * Generate list of changed objects (compared between two models)
+
+
+== VIEWS ==
+
+- Change management
+ * Viewer instance
+ * List revisions
+ * Highlight changed objects in the viewer
+ 
+
+- Marking/communication
+  * Viewer instance
+  * Marking management (add, remove, modify)
+
+- model comparison, double viewer instances
+  * Two viewer instances side by side
+  
+  
+  
+Legend:
+(==) - Main item / topic for the tasks
+(-)  - Feature
+(*)  - Task 
