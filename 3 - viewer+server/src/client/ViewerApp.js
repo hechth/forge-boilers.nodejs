@@ -24,12 +24,11 @@ import ModuleLoader from './extensions/Autodesk.ADN.Viewing.Extension.ModelLoade
 
 import MarkupsCore from './extensions/Viewing.Extension.Markup2D/MarkupsCore.js'
 
-
-
 import 'bootstrap'
 //import 'bootstrap-compass'
 import 'bootstrap-sass'
 //import 'bootstrap/dist/css/bootstrap.css'
+import 'jquery-ui';
 
 var urn_rst1 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTEyLTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5pZmM';
 var urn_rst2 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTEyLTQxLTA4LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdF9tb2QxLmlmYw'
@@ -85,7 +84,7 @@ function loadDocToViewer(urn)
 // Document Loaded Handler
 //
 /////////////////////////////////////////////////////////////////
-function onDocumentLoaded (doc) {
+function onDocumentLoaded(doc) {
 
   var rootItem = doc.getRootItem()
 
@@ -130,22 +129,20 @@ function onDocumentLoaded (doc) {
 
   viewer.loadModel(doc.getViewablePath(selectedItem));
 
-  var options = {
-    model: {
-        name: doc.getViewablePath(selectedItem)
-    }
-  };
-
+  viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,onSelectionChanged);
   viewer.loadExtension('Viewing.Extension.Basic');
   viewer.loadExtension('Viewing.Extension.Markup2D');
-  viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader',options);
+  viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader', options);
 }
 
+function onSelectionChanged(event){
+  console.log(event);
+}
 /////////////////////////////////////////////////////////////////
 // Environment Initialized Handler
 //
 /////////////////////////////////////////////////////////////////
-function onEnvInitialized () {
+function onEnvInitialized() {
   loadDocToViewer(urn_rst1);
 }
 
@@ -153,7 +150,7 @@ function onEnvInitialized () {
 // Error Handler
 //
 /////////////////////////////////////////////////////////////////
-function onLoadError (errCode) {
+function onLoadError(errCode) {
 
   console.log('Error loading document: ' + errCode)
 }
@@ -162,8 +159,16 @@ function onLoadError (errCode) {
 // Application Bootstrapping
 //
 //////////////////////////////////////////////////////////////////////////
-$(document).ready(function () {
+$(document).ready(function() {
 
+  $("#revisions-list li").click(function() {
+ 
+ if (this.id === 'revision_5')
+ {
+    var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
+ } else if (this.id ==='revision_4') {
+
+    
   document.getElementById("btnArch").addEventListener("click", function(){loadDocToViewer(urn_rst1)}, false);
   document.getElementById("btnStruct").addEventListener("click", function(){loadDocToViewer(urn_rst2)}, false);
   document.getElementById("btnMep").addEventListener("click", function(){loadDocToViewer(urn_rme1)}, false);
@@ -171,6 +176,12 @@ $(document).ready(function () {
   Autodesk.Viewing.Initializer(
     initOptions,
     function() {
-      onEnvInitialized ()
+      onEnvInitialized()
     })
+
+ }
+
+})
+
+  
 })

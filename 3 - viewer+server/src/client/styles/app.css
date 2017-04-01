@@ -10,6 +10,7 @@ body {
   background: #f1f4f7;
   padding-top: 50px;
   color: #5f6468;
+  overflow-x: hidden;
 }
 
 
@@ -972,8 +973,15 @@ h1.page-header {
 }
 
 .viewer{
-  height: 300px;
-  width: 300px;
+  overflow:hidden;
+  height: 500px;
+  margin-right: 30px;
+  width:90%;
+}
+
+.timeline{
+  height: 500px;
+  background-color:red;
 }
 
 
