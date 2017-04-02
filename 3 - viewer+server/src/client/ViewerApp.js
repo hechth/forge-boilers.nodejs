@@ -197,21 +197,21 @@ $(document).ready(function() {
     // console.log($(this).attr('id'));
     viewer.fitToView($(this).attr('id'));
 
-    $('#element-id-i').empty();    
-    $('#changed-by-i').empty();    
+    $('#element-id-i').empty();
+    $('#changed-by-i').empty();
     $('#comment-input-id').empty();
-    if (key ===false){
-      
-    $('<p>4172</p>').appendTo('#element-id-i');
-    $('<p>Helge Hecht</p>').appendTo('#changed-by-i');
-    $('<p>Increase thickness to satisfy new load specifications</p>').appendTo('#comment-input-id');
-    key =true;
+    if (key === false) {
+
+      $('<p>4172</p>').appendTo('#element-id-i');
+      $('<p>Helge Hecht</p>').appendTo('#changed-by-i');
+      $('<p>Increase thickness to satisfy new load specifications</p>').appendTo('#comment-input-id');
+      key = true;
     } else {
 
-    $('<p>2873</p>').appendTo('#element-id-i');
-    $('<p>Daniel Zibion</p>').appendTo('#changed-by-i');
-    $('<p>Fixed mistake in density property</p>').appendTo('#comment-input-id');
-    key =false;
+      $('<p>2873</p>').appendTo('#element-id-i');
+      $('<p>Daniel Zibion</p>').appendTo('#changed-by-i');
+      $('<p>Fixed mistake in density property</p>').appendTo('#comment-input-id');
+      key = false;
     }
 
 
@@ -238,9 +238,27 @@ $(document).ready(function() {
 
 
 
-  document.getElementById("btnArch").addEventListener("click", function() { loadDocToViewer(urn_rst1) }, false);
-  document.getElementById("btnStruct").addEventListener("click", function() { loadDocToViewer(urn_rst2) }, false);
-  document.getElementById("btnMep").addEventListener("click", function() { loadDocToViewer(urn_rme1) }, false);
+  document.getElementById("btnArch").addEventListener("click", function() {
+    loadDocToViewer(urn_rst1);
+    $('#element-id-i').empty();
+    $('#changed-by-i').empty();
+    $('#comment-input-id').empty();
+    $('#element-list').empty();
+  }, false);
+  document.getElementById("btnStruct").addEventListener("click", function() {
+    loadDocToViewer(urn_rst2);
+    $('#element-id-i').empty();
+    $('#changed-by-i').empty();
+    $('#comment-input-id').empty();
+    $('#element-list').empty();
+  }, false);
+  document.getElementById("btnMep").addEventListener("click", function() {
+    loadDocToViewer(urn_rme1);
+    $('#element-id-i').empty();
+    $('#changed-by-i').empty();
+    $('#comment-input-id').empty();
+    $('#element-list').empty();
+  }, false);
 
   Autodesk.Viewing.Initializer(
     initOptions,
