@@ -159,6 +159,10 @@ function onLoadError(errCode) {
 //
 //////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
+  
+  // $('.btn').button();
+  // $('#btnArch').button('toggle')
+
   $('#revisions-list li').click(function() {
 
     // empty element list
@@ -213,52 +217,31 @@ $(document).ready(function() {
       $('<p>Fixed mistake in density property</p>').appendTo('#comment-input-id');
       key = false;
     }
-
-
-
   });
 
 
-  $('#btnStruct').click(function() {
-
-    onDocumentLoaded()
-
-  });
-
-  // $("#revisions-list li").click(function() 
-  // { 
-  //   if (this.id === 'revision_5')
-  //   {
-  //       var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTA5LTQ3LTUzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5ydnQ'
-  //   } 
-  //   else if (this.id ==='revision_4') 
-  //   {           
-  //   }
-  // })
-
-
-
-  document.getElementById("btnArch").addEventListener("click", function() {
+  // Domain/discipline selection buttons
+  $('#btnArch').on('change', function () {
     loadDocToViewer(urn_rst1);
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
     $('#comment-input-id').empty();
     $('#element-list').empty();
-  }, false);
-  document.getElementById("btnStruct").addEventListener("click", function() {
+});
+  $('#btnStruct').on('change', function () {
     loadDocToViewer(urn_rst2);
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
     $('#comment-input-id').empty();
     $('#element-list').empty();
-  }, false);
-  document.getElementById("btnMep").addEventListener("click", function() {
+});
+  $('#btnMep').on('change', function () {
     loadDocToViewer(urn_rme1);
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
     $('#comment-input-id').empty();
     $('#element-list').empty();
-  }, false);
+});
 
   Autodesk.Viewing.Initializer(
     initOptions,
