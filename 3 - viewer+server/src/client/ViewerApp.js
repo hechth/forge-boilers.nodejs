@@ -29,11 +29,15 @@ import 'bootstrap'
 import 'bootstrap-sass'
 //import 'bootstrap/dist/css/bootstrap.css'
 import 'jquery-ui';
+import ViewerToolkit from './ViewerToolkit';
 
 var key = false;
+// var key_clicked_revision = false;
+
 var urn_rst1 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAyLTA1LTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9hcmNoLnJ2dA'
 var urn_rst2 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTEyLTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5pZmM';
 var urn_rme1 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAyLTA1LTMzLTEwLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9tZXAucnZ0'
+
 
 /////////////////////////////////////////////////////////////////
 // Initialization Options
@@ -68,6 +72,25 @@ function highlightByIds(viewer, idArr) {
     viewer.toggleSelect(id);
   });
 }
+
+function addMaterial(color) {
+
+  var material = new THREE.MeshPhongMaterial({
+    color: color
+  });
+
+  viewer.impl.matman().addMaterial(
+    guid(),
+    material);
+
+  return material;
+}
+// function isolateFull(dbIds = []) {
+
+//   viewer.isolate(dbIds)
+
+//   const targetIds = Array.isArray(dbIds) ? dbIds : [dbIds]
+// }
 
 function loadDocToViewer(urn) {
   console.log("loadDocToViewer");
@@ -132,6 +155,7 @@ function onDocumentLoaded(doc) {
   // viewer.loadExtension('Viewing.Extension.Basic');
   viewer.loadExtension('Viewing.Extension.Markup2D');
   // viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader', options);
+  window.selectionMaterial = addMaterial(0xFF0000);
 }
 
 function onSelectionChanged(event) {
@@ -154,11 +178,31 @@ function onLoadError(errCode) {
   console.log('Error loading document: ' + errCode)
 }
 
+/////////////////////////////////////////////////////////////////
+// Error Handler
+//
+/////////////////////////////////////////////////////////////////
+function guid() {
+
+  var d = new Date().getTime();
+
+  var guid = 'xxxx-xxxx-xxxx-xxxx'.replace(
+    /[xy]/g,
+    function(c) {
+      var r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+    });
+
+  return guid;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Application Bootstrapping
 //
 //////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
+
   $('#revisions-list li').click(function() {
 
     // empty element list
@@ -166,20 +210,36 @@ $(document).ready(function() {
     var data = []
     if (this.id === 'revision_5') {
       data = [1301];
-      highlightByIds(viewer, data);
+
+      // ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
+
+
     } else if (this.id === 'revision_4') {
-      data = [1309]
-      highlightByIds(viewer, data);
+      data = [1309];
+
+
+      ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
+
     } else if (this.id === 'revision_3') {
       data = [1311, 1453, 1455, 1459, 1461];
-      highlightByIds(viewer, data);
+
+
+
+      ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
     } else if (this.id === 'revision_2') {
       data = [1178, 1180, 1182, 1184, 1186, 1188, 1194, 1555, 1567, 1573, 1579, 1585, 1591];
-      highlightByIds(viewer, data);
+
+
+
+      ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
     } else if (this.id === 'revision_1') {
       data = [2506];
-      highlightByIds(viewer, data);
+
+      ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
+
     }
+
+    viewer.impl.invalidate(true);
 
     var cList = $('#element-list')
     cList.empty();
@@ -194,8 +254,10 @@ $(document).ready(function() {
 
   $(document).on("click", "#element-list li", function(event) {
     // alert($(this).text()+" clicked");
-    // console.log($(this).attr('id'));
-    viewer.fitToView($(this).attr('id'));
+    // console.log([Number($(this).attr('id'))]);
+    // viewer.isolate($(this).attr('id'));
+    // highlightByIds(viewer, [($(this).attr('id'))]);
+    viewer.fitToView([Number($(this).attr('id'))]);
 
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
@@ -213,8 +275,6 @@ $(document).ready(function() {
       $('<p>Fixed mistake in density property</p>').appendTo('#comment-input-id');
       key = false;
     }
-
-
 
   });
 
