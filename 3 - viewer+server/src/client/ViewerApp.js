@@ -210,31 +210,31 @@ $(document).ready(function() {
     var data = []
     if (this.id === 'revision_5') {
       data = [1301];
-
-      // ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
+      viewer.isolate(data)
+      ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
 
 
     } else if (this.id === 'revision_4') {
       data = [1309];
 
-
+      viewer.isolate(data)
       ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
 
     } else if (this.id === 'revision_3') {
       data = [1311, 1453, 1455, 1459, 1461];
 
 
-
+      viewer.isolate(data)
       ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
     } else if (this.id === 'revision_2') {
       data = [1178, 1180, 1182, 1184, 1186, 1188, 1194, 1555, 1567, 1573, 1579, 1585, 1591];
 
 
-
+      viewer.isolate(data)
       ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
     } else if (this.id === 'revision_1') {
       data = [2506];
-
+      viewer.isolate(data)
       ViewerToolkit.setMaterial(viewer.model, data, window.selectionMaterial)
 
     }
