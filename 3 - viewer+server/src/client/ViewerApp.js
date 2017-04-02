@@ -31,9 +31,68 @@ import 'bootstrap-sass'
 import 'jquery-ui';
 
 var key = false;
-var urn_rst1 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAyLTA1LTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9hcmNoLnJ2dA'
-var urn_rst2 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTEyLTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5pZmM';
-var urn_rme1 = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAyLTA1LTMzLTEwLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9tZXAucnZ0'
+var urn_rac = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAyLTA1LTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9hcmNoLnJ2dA'
+var urn_rst = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAxLTEyLTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9zYW1wbGVfcHJvamVjdC5pZmM';
+var urn_rme = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAyLTA1LTMzLTEwLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9tZXAucnZ0'
+
+var activeModel = 0; // 0 = rac, 1 = rst, 2 = rme
+
+// Predefined data sets
+var revisions_rac = [ "01 Mai 2016",
+                      "24 April 2016",
+                      "12 April 2016",
+                      "30 March 2016",
+                      "08 March 2016"
+                    ];
+var rac_sel_set = [[2616], [2400], [9537, 9566, 9594], 
+                   [4973,
+                    5790,
+                    5794,
+                    5798,
+                    5802,
+                    5806,
+                    5810,
+                    9106,
+                    9110,
+                    9114,
+                    9118], 
+                   [3138,
+                    3142,
+                    3144,
+                    3146,
+                    3148,
+                    3150]
+                  ];
+
+var revisions_rst = [ "10 Jan 2016",
+                      "11 Feb 2016",
+                      "21 Feb 2016",
+                      "15 March 2016",
+                      "17 March 2016",
+                      "25 April 2016",
+                      "05 July 2016",
+                      "30 Sep 2016"
+                    ];
+                    
+var rst_sel_set = [ 
+                    [1301],
+                    [1309],
+                    [1311, 1453, 1455, 1459],
+                    [1461],
+                    [1178,1180,1182],
+                    [1184,1186,1188,1194,1555,1567,1573],
+                    [1579,1585,1591],
+                    [2506]
+                  ];
+
+
+var revisions_rme = [ "14 Nov 2015",
+                      "02 Jan 2016",
+                      "01 April 2016",
+                      "05 July 2016"
+                    ];
+var rme_sel_set = [[4663], [7006], [4671], [5824, 5825, 5827], [5281]];
+
 
 /////////////////////////////////////////////////////////////////
 // Initialization Options
@@ -128,7 +187,7 @@ function onDocumentLoaded(doc) {
 
   viewer.loadModel(doc.getViewablePath(selectedItem));
 
-  viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onSelectionChanged);
+  //viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onSelectionChanged);
   // viewer.loadExtension('Viewing.Extension.Basic');
   viewer.loadExtension('Viewing.Extension.Markup2D');
   // viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader', options);
@@ -142,7 +201,7 @@ function onSelectionChanged(event) {
 //
 /////////////////////////////////////////////////////////////////
 function onEnvInitialized() {
-  loadDocToViewer(urn_rst1);
+  loadDocToViewer(urn_rac);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -154,47 +213,54 @@ function onLoadError(errCode) {
   console.log('Error loading document: ' + errCode)
 }
 
+function setRevisionListContent(list, data)
+{
+  list.empty();
+    $.each(data, function(i) {
+      var li = $('<li/>')
+        .addClass('todo-list-item')
+        .attr('id', "revision_" + i)
+        .text(data[i])
+        .appendTo(list);
+    });
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Application Bootstrapping
 //
 //////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
   
-  // $('.btn').button();
-  // $('#btnArch').button('toggle')
+  
+  var rList = $('#revisions-list')
+  setRevisionListContent(rList, revisions_rac);
+  activeModel = 0;
 
-  $('#revisions-list li').click(function() {
+  function onRevisionCLicked()
+  {
+    console.log("Revision " + this.id);
 
-    // empty element list
+    var data = rac_sel_set;
+    if (activeModel === 1)
+      data = rst_sel_set;
+    else if (activeModel === 2)
+      data = rme_sel_set;
 
-    var data = []
-    if (this.id === 'revision_5') {
-      data = [1301];
-      highlightByIds(viewer, data);
-    } else if (this.id === 'revision_4') {
-      data = [1309]
-      highlightByIds(viewer, data);
-    } else if (this.id === 'revision_3') {
-      data = [1311, 1453, 1455, 1459, 1461];
-      highlightByIds(viewer, data);
-    } else if (this.id === 'revision_2') {
-      data = [1178, 1180, 1182, 1184, 1186, 1188, 1194, 1555, 1567, 1573, 1579, 1585, 1591];
-      highlightByIds(viewer, data);
-    } else if (this.id === 'revision_1') {
-      data = [2506];
-      highlightByIds(viewer, data);
-    }
+    var revisionNbr = Number(this.id.substr(9));    
+    highlightByIds(viewer, data[revisionNbr]);
 
     var cList = $('#element-list')
     cList.empty();
-    $.each(data, function(i) {
+    $.each(data[revisionNbr], function(i) {
       var li = $('<li/>')
         .addClass('todo-list-item')
-        .attr('id', data[i])
-        .text('id: ' + data[i])
+        .attr('id', data[revisionNbr][i])
+        .text('id: ' + data[revisionNbr][i])
         .appendTo(cList);
     });
-  });
+  };
+
+  $('#revisions-list li').click(onRevisionCLicked);
 
   $(document).on("click", "#element-list li", function(event) {
     // alert($(this).text()+" clicked");
@@ -222,21 +288,30 @@ $(document).ready(function() {
 
   // Domain/discipline selection buttons
   $('#btnArch').on('change', function () {
-    loadDocToViewer(urn_rst1);
+    loadDocToViewer(urn_rac);
+    setRevisionListContent(rList, revisions_rac);
+    $('#revisions-list li').click(onRevisionCLicked);
+    activeModel = 0;
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
     $('#comment-input-id').empty();
     $('#element-list').empty();
 });
   $('#btnStruct').on('change', function () {
-    loadDocToViewer(urn_rst2);
+    loadDocToViewer(urn_rst);
+    activeModel = 1;
+    setRevisionListContent(rList, revisions_rst);
+    $('#revisions-list li').click(onRevisionCLicked);
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
     $('#comment-input-id').empty();
     $('#element-list').empty();
 });
   $('#btnMep').on('change', function () {
-    loadDocToViewer(urn_rme1);
+    loadDocToViewer(urn_rme);
+    activeModel = 2;
+    setRevisionListContent(rList, revisions_rme);
+    $('#revisions-list li').click(onRevisionCLicked);
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
     $('#comment-input-id').empty();
