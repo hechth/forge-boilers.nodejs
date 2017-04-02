@@ -29,6 +29,7 @@ import 'bootstrap'
 import 'bootstrap-sass'
 //import 'bootstrap/dist/css/bootstrap.css'
 import 'jquery-ui';
+import ViewerToolkit from './ViewerToolkit';
 
 var key = false;
 var urn_rac = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE3LTA0LTAyLTA1LTQyLTI3LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3JzdF9hZHZhbmNlZF9hcmNoLnJ2dA'
@@ -128,6 +129,25 @@ function highlightByIds(viewer, idArr) {
   });
 }
 
+function addMaterial(color) {
+
+  var material = new THREE.MeshPhongMaterial({
+    color: color
+  });
+
+  viewer.impl.matman().addMaterial(
+    guid(),
+    material);
+
+  return material;
+}
+// function isolateFull(dbIds = []) {
+
+//   viewer.isolate(dbIds)
+
+//   const targetIds = Array.isArray(dbIds) ? dbIds : [dbIds]
+// }
+
 function loadDocToViewer(urn) {
   console.log("loadDocToViewer");
 
@@ -191,6 +211,7 @@ function onDocumentLoaded(doc) {
   // viewer.loadExtension('Viewing.Extension.Basic');
   viewer.loadExtension('Viewing.Extension.Markup2D');
   // viewer.loadExtension('Autodesk.ADN.Viewing.Extension.ModelLoader', options);
+  window.selectionMaterial = addMaterial(0xFF0000);
 }
 
 function onSelectionChanged(event) {
@@ -213,6 +234,25 @@ function onLoadError(errCode) {
   console.log('Error loading document: ' + errCode)
 }
 
+/////////////////////////////////////////////////////////////////
+// Error Handler
+//
+/////////////////////////////////////////////////////////////////
+function guid() {
+
+  var d = new Date().getTime();
+
+  var guid = 'xxxx-xxxx-xxxx-xxxx'.replace(
+    /[xy]/g,
+    function(c) {
+      var r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+    });
+
+  return guid;
+}
+
 function setRevisionListContent(list, data)
 {
   list.empty();
@@ -230,8 +270,9 @@ function setRevisionListContent(list, data)
 //
 //////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
-  
-  
+
+  //$('#revisions-list li').click(function() { 
+
   var rList = $('#revisions-list')
   setRevisionListContent(rList, revisions_rac);
   activeModel = 0;
@@ -247,7 +288,11 @@ $(document).ready(function() {
       data = rme_sel_set;
 
     var revisionNbr = Number(this.id.substr(9));    
-    highlightByIds(viewer, data[revisionNbr]);
+    //highlightByIds(viewer, data[revisionNbr]);
+
+    viewer.isolate(data[revisionNbr])
+    ViewerToolkit.setMaterial(viewer.model, data[revisionNbr], window.selectionMaterial)
+    viewer.impl.invalidate(true);
 
     var cList = $('#element-list')
     cList.empty();
@@ -264,8 +309,10 @@ $(document).ready(function() {
 
   $(document).on("click", "#element-list li", function(event) {
     // alert($(this).text()+" clicked");
-    // console.log($(this).attr('id'));
-    viewer.fitToView($(this).attr('id'));
+    // console.log([Number($(this).attr('id'))]);
+    // viewer.isolate($(this).attr('id'));
+    // highlightByIds(viewer, [($(this).attr('id'))]);
+    viewer.fitToView([Number($(this).attr('id'))]);
 
     $('#element-id-i').empty();
     $('#changed-by-i').empty();
