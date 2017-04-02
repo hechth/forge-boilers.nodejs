@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <meta name="viewport" content="width=device-width, height=device-height, minimal-ui, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="<%=htmlWebpackPlugin.options.viewerCSS%>" type="text/css" />
- <link rel="stylesheet" href="../node_modules/inspire-tree/dist/inspire-tree.css" />
+  <link rel="stylesheet" href="../node_modules/inspire-tree/dist/inspire-tree.css" />
   <link rel="shortcut icon" href="/resources/img/favicon.ico" type="image/x-icon" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <title>
@@ -160,7 +160,6 @@
           </svg> Login Page</a>
       </li>
     </ul>
-    
   </div>
   <!--/.sidebar-->
   <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -170,34 +169,68 @@
       </div>
     </div>
     <!--/.row-->
-    <div class="row">              
-        <div class="myButton" id="btnArch">Architechture</div> 
-        <div class="myButton" id="btnStruct">Structural</div> 
-        <div class="myButton" id="btnMep">MEP</div>
-    </div>  
+    <div class="row">
+      <div class="myButton" id="btnArch">Architechture</div>
+      <div class="myButton" id="btnStruct">Structural</div>
+      <div class="myButton" id="btnMep">MEP</div>
+    </div>
     <br />
-    
     <!--/.row-->
     <div class="row">
-      <div class="col-md-4 ">
-        <div class="panel  panel-blue">
-          <div class="panel-heading">Revisions</div>
-          <div class="panel-body">
-            <ul id="revisions-list" class="todo-list">
-              <li id="revision_5" class="todo-list-item">#5 Revision 15 May 2016</li>
-              <li id="revision_4" class="todo-list-item">#4 Revision 15 May 2016</li>
-              <li id="revision_3" class="todo-list-item">#3 Revision 15 May 2016</li>
-              <li id="revision_2" class="todo-list-item">#2 Revision 15 May 2016</li>
-              <li id="revision_1" class="todo-list-item">#1 Revision 15 May 2016</li>
-            </ul>
+      <div class="col-md-2 ">
+        <div class="row">
+          <div class="panel panel-blue">
+            <div class="panel-heading">Revisions
+            </div>
+            <div class="panel-body">
+              <ul id="revisions-list" class="todo-list">
+                <li id="revision_5" class="todo-list-item">01 Mai 2016</li>
+                <li id="revision_4" class="todo-list-item">24 April 2016</li>
+                <li id="revision_3" class="todo-list-item">12 April 2016</li>
+                <li id="revision_2" class="todo-list-item">30 March 2016</li>
+                <li id="revision_1" class="todo-list-item">08 March 2016
+                  <li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class=" panel  panel-blue element-container">
+            <div class="panel-heading">Changed Elements</div>
+            <div class="panel-body">
+              <ul id="element-list" class="todo-list">
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-8 ">
+      <div class="col-md-6 ">
         <div class "row">
+          <div <div id='viewer' class='panel viewer'></div>
         </div>
-        <div
-        <div id='viewer' class='panel viewer'></div>
+      </div>
+      <div class="col-md-3 ">
+        <div class="panel panel-info info-panel">
+          <div class="panel-heading">Element Information
+          </div>
+          <div class="panel-body">
+            <ul id="info-list" class="todo-list">
+              <li class="todo-list-item">
+                <div id="element-id" class="left">Id:</div>
+                <div id="element-id-i" class="right"></div>
+              </li>
+              <li class="todo-list-item">
+                <div id="changed-by" class="left">Changed by:</div>
+                <div id="changed-by-i" class="right"></div>
+              </li>
+              <li class="todo-list-item">
+                <div id="changed-by" class="left">Comment:</div>
+                <div id="changed-by-i" class="right"></div>
+              </li>
+            </ul>
+            <div id="comment-input-id"class="comment-input"></div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <div class="row">
