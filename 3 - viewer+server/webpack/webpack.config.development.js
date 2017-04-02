@@ -50,7 +50,7 @@ module.exports = {
       viewer3D: 'https://autodeskviewer.com/viewers/2.9/viewer3D.js',
       viewerCSS: 'https://autodeskviewer.com/viewers/2.9/style.css',
       template: './layout/index.ejs',
-      title: 'Autodesk Forge | DEV',
+      title: 'BIM Square',
       filename: 'index.html',
       bundle: 'bundle.js',
       minify: false,

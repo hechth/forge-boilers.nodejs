@@ -60,7 +60,7 @@ module.exports = {
       viewerCSS: 'https://autodeskviewer.com/viewers/2.9/style.min.css',
       template: './layout/index.ejs',
       bundle: 'bundle.min.js',
-      title: 'Autodesk Forge',
+      title: 'BIM Square',
       filename: 'index.html',
       minify: {
         removeStyleLinkTypeAttributes: true,
